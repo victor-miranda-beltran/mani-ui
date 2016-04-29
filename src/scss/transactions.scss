@@ -1,0 +1,47 @@
+@import "variables.scss";
+
+#transactions {
+  margin: 20px;
+  width: 800px;
+
+  .filter-header {
+    padding: 10px;
+    margin-bottom: 20px;
+    height: 60px;
+    background: white;
+  }
+
+  #transactions-list {
+    background: white;
+    border-radius: 6px;
+
+    .header {
+      background: #E74C3C;
+      padding: 5px;
+      color: white;
+      font-weight: bold;
+      border-radius: 6px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .description, .amount, .date, .account{
+      display: inline-block;
+    }
+
+    .description {
+      width: 200px;
+    }
+
+    .account {
+      width: 190px;
+    }
+
+    .date {
+      width: 110px;
+    }
+  }
+
+
+}
+

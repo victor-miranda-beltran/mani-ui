@@ -1,0 +1,46 @@
+@import "variables.scss";
+$icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+
+html {
+  height: 100%;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  box-sizing: border-box;
+  height: 100%;
+  background-color: $color-bg-main;
+  color: $color-text-main;
+  cursor: default;
+}
+
+a {
+  color: $color-text-main;
+}
+
+a:visited, a:hover {
+  color: $color-text-main;
+}
+
+.fill-h {
+  height: 100%;
+}
+
+.fill-w {
+  width: 100%;
+}
+
+.fill {
+  @extend .fill-h;
+  @extend .fill-w;
+}
+
+div.tablediv {
+  padding: 5px;
+}
+div.even {
+  background: $even;
+}
+
+@import "transactions.scss";

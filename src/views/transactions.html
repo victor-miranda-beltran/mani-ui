@@ -1,0 +1,42 @@
+<div id="transactions">
+
+    <div class="filter-header">
+        <input type="text" class="search pull-right" placeholder="Filter..." data-ng-model="transactionFilter">
+    </div>
+
+    <div id="transactions-list">
+        <div class="header">
+            <span class="date">Date</span>
+            <span class="account">Account</span>
+            <span class="description">Description</span>
+            <span class="amount">Amount</span>
+        </div>
+        <div class="transaction tablediv" data-ng-class="{even: $index%2 == 0}" data-ng-repeat="t in pagedItems[pagination.currentPage] ">
+            <span class="date">{{t.date}}</span>
+            <span class="account">{{t.account.id}}</span>
+            <span class="description">{{t.description}}</span>
+            <span class="amount">{{t.amount}}</span>
+        </div>
+
+        <div class="pagination pull-right">
+            <ul class="pagination">
+                <li ng-class="{disabled: currentPage == 0}">
+                    <a href ng-click="prevPage()">« Prev</a>
+                </li>
+
+                <li ng-repeat="n in pagination.range"
+                    ng-class="{active: n == pagination.currentPage}"
+                    ng-click="setPage()">
+                    <a href ng-bind="n + 1">1</a>
+                </li>
+
+                <li ng-class="{disabled: (pagination.currentPage) == pagedItems.length - 1}">
+                    <a href ng-click="nextPage()">Next »</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+</div>
