@@ -8,7 +8,8 @@ angular
 	.module('mani', [
 		'templates',
 		'ngRoute',
-		'ui.bootstrap'
+		'ui.bootstrap',
+		'ngTagsInput'
 	])
 	.config(function ($routeProvider) {
 		$routeProvider
@@ -20,4 +21,18 @@ angular
 				redirectTo: '/'
 			});
 	})
+	.directive('limitTags', function() {
+		return {
+			require: 'ngModel',
+			link: function(scope, elem, attrs, ngModel) {
+				var maxTags = parseInt(attrs.maxTags, 10);
+				ngModel.$parsers.unshift(function(value) {
+					if (value && value.length > maxTags) {
+						value.splice(value.length - 1, 1);
+					}
+					return value;
+				});
+			}
+		};
+	});
 ;

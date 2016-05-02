@@ -2,43 +2,54 @@
 
 #transactions {
   margin: 20px;
-  width: 800px;
 
   .filter-header {
     padding: 10px;
-    margin-bottom: 20px;
     height: 60px;
-    background: white;
+    background: #C0392B;
+    border-radius: 6px;
+    color: white;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   #transactions-list {
     background: white;
-    border-radius: 6px;
+    margin:0;
+    padding:0;
+    .row {
+      margin:0;
+      vertical-align: middle;
+    }
 
     .header {
       background: #E74C3C;
+
       padding: 5px;
+      margin:0;
       color: white;
       font-weight: bold;
-      border-radius: 6px;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+
     }
 
-    .description, .amount, .date, .account{
-      display: inline-block;
+    .category .host{
+      margin :0;
+      padding: 0;
     }
 
-    .description {
-      width: 200px;
-    }
+  }
 
-    .account {
-      width: 190px;
-    }
+  .pagination {
+    padding-right: 10px !important;
+  }
 
-    .date {
-      width: 110px;
+  #filter-body{
+    background: white;
+    padding: 10px;
+    margin: 0;
+
+    .form-group {
+      margin-bottom: 60px;
     }
   }
 
