@@ -1,4 +1,8 @@
-$color-bg-main: #2C3E50;
+$color-bg-main: rgb(62,111,177);
+
+$color-bg-alt: rgb(42,88,140);
+//$color-bg-main: #FEFEFE;
+
 $color-text-main: rgb(10,22,22);
 
 $even: #ECF0F1;
@@ -6,3 +10,9 @@ $even: #ECF0F1;
 $body-bg:              $color-bg-main;
 
 $navbar-default-bg: #C0392B;
+
+$color-header-bg : $color-bg-alt;
+$color-header-bg-soft : lighten($color-header-bg,5);
+
+
+$border-radius-base : 0;

@@ -1,58 +1,34 @@
 @import "variables.scss";
 
 #transactions {
-  margin: 20px;
 
-  .filter-header {
-    padding: 10px;
-    height: 60px;
-    background: #C0392B;
-    border-radius: 6px;
-    color: white;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+  .row {
+    padding :0px;
+    margin: 0px;
+  }
+
+  #filter-body {
+    .form-group {
+     height: 2em;
+    }
   }
 
   #transactions-list {
-    background: white;
-    margin:0;
-    padding:0;
-    .row {
-      margin:0;
-      vertical-align: middle;
-    }
 
-    .header {
-      background: #E74C3C;
-
-      padding: 5px;
-      margin:0;
-      color: white;
-      font-weight: bold;
-
-    }
-
-    .category .host{
-      margin :0;
+    .container-fluid {
       padding: 0;
+      margin: 0;
+    }
+
+    .columns {
+      border:0;
+      height: auto;
+      background: $color-header-bg-soft;
+      color: white;
     }
 
   }
-
-  .pagination {
-    padding-right: 10px !important;
-  }
-
-  #filter-body{
-    background: white;
-    padding: 10px;
-    margin: 0;
-
-    .form-group {
-      margin-bottom: 60px;
-    }
-  }
-
 
 }
+
 

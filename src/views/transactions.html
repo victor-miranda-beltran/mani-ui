@@ -4,124 +4,139 @@
 
         <div class="col-md-3">
 
-            <div class="filter-header">
-                <div class="col-md-12">
-                    Advanced filter
-                </div>
-            </div>
+            <div id="advanced-filter" class="panel">
 
-            <div id="filter-body">
-
-                <div class="row">
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="selectbasic">Dates</label>
-                        <div class="col-md-8">
-                            <select id="selectbasic" name="selectbasic" class="form-control">
-                                <option value="1">All dates</option>
-                                <option value="2">This month</option>
-                                <option value="">Last 6 months</option>
-                                <option value="">Customised</option>
-                            </select>
-                        </div>
-                    </div>
-
+                <div class="header">
+                    <i class="fa fa-filter" aria-hidden="true"></i>
+                     Advanced filter
                 </div>
 
-                <div class="row">
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="selectbasic">Amount</label>
-                        <div class="col-md-4">
-                            <input type="text" placeholder="min value" class="small form-control" />
-                        </div>
 
-                        <div class="col-md-4">
-                            <input type="text" placeholder="max value"  class="small form-control" />
-                        </div>
-                    </div>
+                <div class="body form" id="filter-body">
 
-                </div>
-
-                <div class="row">
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="selectbasic">Category</label>
-                        <div class="col-md-8">
-                            <tags-input placeholder="Select categories" ng-model="filter.categories">
-                                <auto-complete source="loadCategories($query)"></auto-complete>
-                            </tags-input>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="selectbasic">Dates</label>
+                            <div class="col-md-8">
+                                <select id="selectbasic" name="selectbasic" class="form-control">
+                                    <option value="1">All dates</option>
+                                    <option value="2">This month</option>
+                                    <option value="">Last 6 months</option>
+                                    <option value="">Customised</option>
+                                </select>
+                            </div>
                         </div>
 
                     </div>
 
-                </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="selectbasic">Amount</label>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="min value" class="form-control" />
+                            </div>
 
-                <div class="row">
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Accounts</label>
-                        <div class="col-md-8">
-                            <div data-ng-repeat="account in accounts">
-                                <div class="account" data-ng-show="account">
-                                    <label for="accounts-{{account.accountId}}">
-                                        <input type="checkbox" name="accounts" id="accounts-{{account.accountId}}" value="{{account.accountId}}" checked="checked">
-                                        {{account.accountName}}
-                                    </label>
-                                </div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="max value"  class="form-control" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="selectbasic">Category</label>
+                            <div class="col-md-8">
+                                <tags-input placeholder="Select categories" ng-model="filter.categories">
+                                    <auto-complete source="loadCategories($query)"></auto-complete>
+                                </tags-input>
                             </div>
 
                         </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Accounts</label>
+                            <div class="col-md-8">
+                                <div data-ng-repeat="account in accounts">
+                                    <div class="account" data-ng-show="account">
+                                        <label for="accounts-{{account.accountId}}">
+                                            <input type="checkbox" name="accounts" id="accounts-{{account.accountId}}" value="{{account.accountId}}" checked="checked">
+                                            {{account.accountName}}
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
 
+
             </div>
+
 
 
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-9 transactions-area">
 
-            <div class="filter-header">
-                <div class="row">
-                    <div class="col-md-2">
-                        Transactions: {{filteredItems.length}}
-                    </div>
-                    <div class="col-md-4">
-                        Total income {{filteredIncome | currency : "€"}} <br>
-                        Avg per month : {{filteredIncome | currency : "€"}}
+            <div id ="transactions-list" class="panel">
+
+                <div class="header">
+                    <div class="row">
+                        <div class="col-md-2">
+                            Transactions: {{filteredItems.length}}
+                        </div>
+                        <div class="col-md-4">
+                            Total income {{filteredIncome | currency : "€"}} <br>
+                            Avg per month : {{filteredIncome | currency : "€"}}
+                        </div>
+
+                        <div class="col-md-4">
+                            Total expenditure {{filteredExpenditure | currency : "€"}} <br/>
+                            Avg per month : {{filteredExpenditure | currency : "€"}}
+                        </div>
+                        <div class="col-md-2">
+                            <input id="search-input"  class="form-control" data-ng-model="transactionFilter" placeholder="filter ..." type="text">
+                        </div>
                     </div>
 
-                    <div class="col-md-4">
-                        Total expenditure {{filteredExpenditure | currency : "€"}} <br/>
-                        Avg per month : {{filteredExpenditure | currency : "€"}}
-                    </div>
-                    <div class="col-md-2">
-                        <input id="search-input"  class="form-control" data-ng-model="transactionFilter" placeholder="filter ..." type="text">
-                    </div>
                 </div>
 
-            </div>
-
-            <div id="transactions-list" class="container-fluid">
-                <div class="header row">
-                    <span class="date col-md-2">Date</span>
-                    <span class="account col-md-2" >Account</span>
-                    <span class="description col-md-3">Description</span>
-                    <span class="amount col-md-1">Amount</span>
-                    <span class="category col-md-3">Category</span>
-                </div>
-                <div class="transaction tablediv row" data-account-id="{{t.accountId}}" data-ng-class="{evenrow: $index%2 == 0}" data-ng-repeat="t in pagedItems[pagination.currentPage] ">
-                    <span class="date col-md-2">{{t.date | date}}</span>
-                    <span class="account col-md-2">{{t.accountName}}</span>
-                    <span class="description col-md-3">{{t.description}}</span>
-                    <span class="amount col-md-1 text-right">{{t.amount  | currency : "€"}}</span>
+                <div id="" class="container-fluid">
+                    <div class="columns row">
+                        <span class="date col-md-2">Date</span>
+                        <span class="account col-md-2" >Account</span>
+                        <span class="description col-md-3">Description</span>
+                        <span class="amount col-md-1">Amount</span>
+                        <span class="category col-md-3">Category</span>
+                    </div>
+                    <div class="transaction tablediv row" data-account-id="{{t.accountId}}" data-ng-class="{evenrow: $index%2 == 0}" data-ng-repeat="t in pagedItems[pagination.currentPage] ">
+                        <span class="date col-md-2">{{t.date | date}}</span>
+                        <span class="account col-md-2">{{t.accountName}}</span>
+                        <span class="description col-md-3">{{t.description}}</span>
+                        <span class="amount col-md-1 text-right">{{t.amount  | currency : "€"}}</span>
                     <span class="category col-md-3">
                         <tags-input class="bootstrap"  add-from-autocomplete-only="true" max-tags="2" ng-class="{'has-tags': t.category.length > 1}"  ng-model="t.category" display-property="name">
                             <auto-complete source="loadCategories($query)"></auto-complete>
                         </tags-input>
                     </span>
-                </div>
+                    </div>
+            </div>
 
-                <div class="pagination pull-right">
+
+                <div class="pagination panel panel-pagination pull-right">
                     <ul class="pagination">
+
+                        <li>
+                            <a href ng-click="setPage(0)" >First</a>
+                        </li>
+
                         <li ng-class="{disabled: currentPage == 0}">
                             <a href ng-click="prevPage()">« Prev</a>
                         </li>
@@ -135,6 +150,11 @@
                         <li ng-class="{disabled: (pagination.currentPage) == pagedItems.length - 1}">
                             <a href ng-click="nextPage()">Next »</a>
                         </li>
+
+                        <li>
+                            <a href ng-click="setPage(pagedItems.length - 1)" >Last</a>
+                        </li>
+
                     </ul>
                 </div>
             </div>

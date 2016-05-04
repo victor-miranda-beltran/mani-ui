@@ -36,86 +36,56 @@ a:visited, a:hover {
   @extend .fill-w;
 }
 
-div.tablediv {
-  padding: 5px;
+
+.panel {
+  background: #fff;
+  padding:0;
+  border:0;
+  border-radius: $border-radius-base;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  transition: all 0.2s ease-in-out;
+
+
+
+  .header {
+    border-radius: $border-radius-base;
+    padding: 5px;
+    height: 50px;
+    color: white;
+    font-size: 1.2em;
+    background: $color-header-bg;
+  }
+
+  .body {
+    padding:10px;
+  }
+
 }
-div.evenrow {
-  background-color: $even;
 
-  .host .tags {
+.panel-pagination {
+  margin-top: 10px;
+  margin-bottom:0;
+  padding: 0px;
 
-    background-color: white;
+  .pagination {
+    margin: 0;
+    padding: 0;
   }
 }
 
-
-tags-input.has-tags input {
-  display: none;
-}
-
-.host .tags {
-  padding: 0;
-  box-shadow: none;
-  border:1px solid #DFDFDF;
-  word-wrap: break-word;
-  cursor: text;
-  background-color: white;
-  width: 100%;
-  height: 100%;
-  margin:0;
-  padding: 0;
+div.tablediv {
+  padding: 5px;
+  background: white;
+  margin-left: 0;
 }
 
 
-.bootstrap .tags {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: none;
+
+
+input {
+  border-radius: 0;
+  border-shadow: none;
 }
 
-.bootstrap .tags.focused {
-  border-color: #66afe9;
-}
-
-.bootstrap .tags .tag-item {
-  background: #428bca;
-  border: 1px solid #357ebd;
-  border-radius: 4px;
-  color: #fff;
-}
-
-.bootstrap .tags .tag-item.selected {
-  background: #d9534f;
-  border: 1px solid #d43f3a;
-  border-radius: 4px;
-  color: #fff;
-}
-
-.bootstrap .tags .tag-item button {
-  background: transparent;
-  color: #000;
-  opacity: .4;
-}
-
-.bootstrap .autocomplete {
-  border-radius: 4px;
-}
-
-.bootstrap .autocomplete .suggestion-item.selected {
-  color: #262626;
-  background-color: #e9e9e9;
-}
-
-.bootstrap .autocomplete .suggestion-item em {
-  font-weight: normal;
-  background-color: #ffff00;
-}
-
-.bootstrap .autocomplete .suggestion-item.selected em {
-  color: #262626;
-  background-color: #ffff00;
-}
-
-
+@import "tags.scss";
 @import "transactions.scss";

@@ -122,8 +122,10 @@ angular.module('mani').controller('TransactionsController', function Transaction
 	};
 
 
-	$scope.setPage = function () {
-		$scope.pagination.currentPage = this.n;
+	$scope.setPage = function (page) {
+		$scope.pagination.currentPage = page !== undefined ? page : this.n;
+
+		console.log($scope.pagination.currentPage);
 		movePagination();
 	};
 

@@ -1,0 +1,10 @@
+@import "variables.scss";
+
+
+.host {
+  .tags {
+    box-shadow: none;
+    border-color: $input-border;
+    padding: 0;
+  }
+}
