@@ -15,6 +15,14 @@
 
   #transactions-list {
 
+    .header {
+      font-size: 1em;
+
+      #search-input {
+        margin:5px;
+      }
+    }
+
     #transactions-table {
       border-collapse: collapse;
 
