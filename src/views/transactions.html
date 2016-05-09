@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="selectbasic">Dates</label>
                             <div class="col-md-8">
-                                <select id="selectbasic" name="selectbasic" class="form-control">
+                                <select id="selectbasic" name="selectbasic"  class="form-control">
                                     <option value="1">All dates</option>
                                     <option value="2">This month</option>
                                     <option value="">Last 6 months</option>
@@ -33,11 +33,11 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="selectbasic">Amount</label>
                             <div class="col-md-4">
-                                <input type="text" placeholder="min value" class="form-control" />
+                                <input type="text" data-ng-model="filter.amountMin" data-ng-keyup="updateFilter()" placeholder="min value" class="form-control" />
                             </div>
 
                             <div class="col-md-4">
-                                <input type="text" placeholder="max value"  class="form-control" />
+                                <input type="text" data-ng-model="filter.amountMax" data-ng-keyup="updateFilter()" placeholder="max value"  class="form-control" />
                             </div>
                         </div>
 
@@ -60,10 +60,10 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Accounts</label>
                             <div class="col-md-8">
-                                <div data-ng-repeat="account in accounts">
+                                <div data-ng-repeat="account in accounts track by $index">
                                     <div class="account" data-ng-show="account">
                                         <label for="accounts-{{account.accountId}}">
-                                            <input type="checkbox" name="accounts" id="accounts-{{account.accountId}}" value="{{account.accountId}}" checked="checked">
+                                            <input type="checkbox" value="{{account.accountId}}" data-ng-model="account.shown" data-ng-change="updateFilter()" id="accounts-{{account.accountId}}" value="{{account.accountId}}" checked="checked">
                                             {{account.accountName}}
                                         </label>
                                     </div>
@@ -75,7 +75,6 @@
                     </div>
 
                 </div>
-
 
             </div>
 
@@ -93,16 +92,17 @@
                             Transactions: {{filteredItems.length}}
                         </div>
                         <div class="col-md-4">
-                            Total income {{filteredIncome | currency : "€"}} <br>
-                            Avg per month : {{filteredIncome | currency : "€"}}
+                            <p class="summary-amount"><span>Total income: </span> {{filteredIncome | maney : {decimals:0} }} </p>
+                            <p class="summary-amount"><span>Avg per month: </span>  {{filteredIncome | maney : {decimals:0} }}</p>
                         </div>
 
                         <div class="col-md-4">
-                            Total expenditure {{filteredExpenditure | currency : "€"}} <br/>
-                            Avg per month : {{filteredExpenditure | currency : "€"}}
+                            <p class="summary-amount"> <span>Total expenditure: </span>  {{filteredExpenditure | maney : {decimals:0} }} </p>
+                            <p class="summary-amount"><span>Avg per month: </span> {{filteredExpenditure | maney : {decimals:0} }}</p>
                         </div>
+
                         <div class="col-md-2">
-                            <input id="search-input"  class="form-control" data-ng-model="transactionFilter" placeholder="filter ..." type="text">
+                            <input id="search-input"  class="form-control" data-ng-model="transactionFilter" data-ng-keyup="updateFilter()" placeholder="filter ..." type="text">
                         </div>
                     </div>
 
@@ -124,7 +124,9 @@
                         <td class="date ">{{t.date | date}}</td>
                         <td class="account ">{{t.accountName}}</td>
                         <td class="description ">{{t.description}}</td>
-                        <td class="amount  text-right">{{t.amount  | currency : "€"}}</td>
+                        <td class="amount  text-right">
+                            <span data-ng-class="{negativeAm : t.flow == 'OUT'}"> {{t.amount | maney}} </span>
+                        </td>
                         <td class="category">
                             <tags-input class="bootstrap"  add-from-autocomplete-only="true" max-tags="2" ng-class="{'has-tags': t.category.length > 1}"  ng-model="t.category" display-property="name">
                                 <auto-complete source="loadCategories($query)"></auto-complete>

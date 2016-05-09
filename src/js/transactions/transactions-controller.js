@@ -9,21 +9,51 @@ angular.module('mani').controller('TransactionsController', function Transaction
 	};
 
 	$scope.pagedItems= [];
+	$scope.selectedAccounts = [];
 	$scope.filteredItems = [];
+	$scope.transactionFilter = '';
 
-	$scope.$watch('transactionFilter', function() {
+	$scope.filter = {
+		transactionName: '',
+		amountMin: undefined,
+		amountMax: undefined,
+		dateStart: '',
+		dateEnd: ''
+	};
+
+	$scope.updateFilter = function(){
 
 		if (!$scope.transactions) {
 			return;
 		}
 
-		$scope.filteredItems = $scope.transactions.filter(function(t) {
-			return t.description.toLowerCase().indexOf( $scope.transactionFilter.toLowerCase()) != -1;
-		});
+		console.log($scope.accounts);
+
+		var shownAccounts = $scope.accounts.filter(function(a) {return a.shown;}).map(function(a){return a.accountId});
+
+		$scope.filteredItems = $scope.transactions
+				//account filter
+				.filter(
+					function(t) {
+						return shownAccounts.filter(function(a){ return a == t.accountId}).length == 1;
+					})
+				//amount filter
+				.filter(
+						function(t) {
+							var min = $scope.filter.amountMin || 0;
+							var max = $scope.filter.amountMax || 10000;
+							return t.amount >= min && t.amount <= max;
+						})
+				//description filter
+				.filter(
+					function(t) {
+						return t.description.toLowerCase().indexOf( $scope.transactionFilter.toLowerCase()) != -1;
+					})
+			;
 		$scope.pagination.currentPage = 0;
 
 		$scope.groupToPages();
-	});
+	};
 
 	var updateTotalAmounts = function() {
 
@@ -40,22 +70,17 @@ angular.module('mani').controller('TransactionsController', function Transaction
 		}, 0);
 	};
 
-	transactionsService.getTransactions().then(function(res){
+	transactionsService.getTransactions(function(transactions){
 
-
-		$scope.transactions = res.data.map(function(t) {
-				t.date = new Date(t.date[0], t.date[1] - 1, t.date[2], 0, 0, 0, 0);
-				t.category = [t.category];
-				return t;
-			});
-
+		$scope.transactions = transactions;
 		$scope.accounts = [];
 
-		$scope.transactions.forEach(function(t) {
+		transactions.forEach(function(t) {
 			if (!$scope.accounts[t.accountId]) {
 				$scope.accounts[t.accountId] = {
 					accountId : t.accountId,
-					accountName : t.accountName
+					accountName : t.accountName,
+					shown: true
 				}
 			}
 		});
@@ -100,7 +125,7 @@ angular.module('mani').controller('TransactionsController', function Transaction
 
 			$scope.pagination.range = $scope.pagination.range.slice(init, init + $scope.pagination.pagesShown);
 		}
-	}
+	};
 
 	$scope.prevPage = function () {
 		if ($scope.pagination.currentPage > 0) {

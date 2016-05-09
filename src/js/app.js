@@ -21,18 +21,20 @@ angular
 				redirectTo: '/'
 			});
 	})
-	.directive('limitTags', function() {
-		return {
-			require: 'ngModel',
-			link: function(scope, elem, attrs, ngModel) {
-				var maxTags = parseInt(attrs.maxTags, 10);
-				ngModel.$parsers.unshift(function(value) {
-					if (value && value.length > maxTags) {
-						value.splice(value.length - 1, 1);
-					}
-					return value;
-				});
-			}
+	.filter('maney', function() {
+
+		var defaultSettings = {
+			decimals:2,
+			currency: ' €'
 		};
-	});
+
+		return function(x, settings) {
+			var config = angular.extend(defaultSettings, settings);
+
+			if (x == undefined) {
+				return '';
+			}
+			return x.toFixed(config.decimals) + config.currency;
+		};
+	})
 ;

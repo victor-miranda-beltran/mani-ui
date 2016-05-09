@@ -23,6 +23,15 @@
       }
     }
 
+    .summary-amount {
+      margin: 0px 5px;
+      padding: 0px;
+      span {
+        display: inline-block;
+        width: 115px;
+      }
+    }
+
     #transactions-table {
       border-collapse: collapse;
 
@@ -44,6 +53,12 @@
       .category {
         min-width: 150px;
         max-width: 150px;
+      }
+
+      .amount {
+        .negativeAm {
+          color: darkred;
+        }
       }
     }
 
