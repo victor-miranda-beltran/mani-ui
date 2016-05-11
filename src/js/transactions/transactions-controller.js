@@ -17,6 +17,7 @@ angular.module('mani').controller('TransactionsController', function Transaction
 		transactionName: '',
 		amountMin: undefined,
 		amountMax: undefined,
+		categories: [],
 		dateStart: '',
 		dateEnd: ''
 	};
@@ -33,6 +34,7 @@ angular.module('mani').controller('TransactionsController', function Transaction
 		}
 
 		var shownAccounts = $scope.accounts.filter(function(a) {return a.shown;}).map(function(a){return a.accountId});
+		var shownCategories = $scope.filter.categories.map(function(a){return a.id});
 
 		$scope.filteredItems = $scope.transactions
 				//account filter
@@ -40,6 +42,16 @@ angular.module('mani').controller('TransactionsController', function Transaction
 					function(t) {
 						return shownAccounts.filter(function(a){ return a == t.account.id}).length == 1;
 					})
+				//category filter
+				.filter(
+						function(t) {
+							if (!shownCategories || !shownCategories.length) {
+								return true;
+							} else if (!t.category) {
+								return false;
+							}
+							return shownCategories.indexOf(t.category[0].id) !== -1;
+						})
 				//amount filter
 				.filter(
 						function(t) {

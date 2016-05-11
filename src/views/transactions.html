@@ -47,7 +47,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="selectbasic">Category</label>
                             <div class="col-md-8">
-                                <tags-input add-from-autocomplete-only="true" placeholder="Select categories" display-property="name" ng-model="filter.categories">
+                                <tags-input add-from-autocomplete-only="true" on-tag-added="updateFilter()" on-tag-removed="updateFilter()" placeholder=""  display-property="name" ng-model="filter.categories">
                                     <auto-complete source="loadCategories($query)"></auto-complete>
                                 </tags-input>
                             </div>
@@ -130,7 +130,7 @@
                             </span>
                         </td>
                         <td class="category">
-                            <tags-input class="bootstrap" on-tag-added="categoryUpdated(t, $tag)"  add-from-autocomplete-only="true" max-tags="2" ng-class="{'has-tags': t.category.length > 0}"  ng-model="t.category" display-property="name">
+                            <tags-input class="bootstrap" on-tag-added="categoryUpdated(t, $tag)" placeholder="Select category" add-from-autocomplete-only="true" max-tags="2" ng-class="{'has-tags': t.category.length > 0}"  ng-model="t.category" display-property="name">
                                 <auto-complete source="loadCategories($query)"></auto-complete>
                             </tags-input>
                         </td>
