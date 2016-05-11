@@ -125,7 +125,9 @@
                         <td class="account ">{{t.account.alias}}</td>
                         <td class="description ">{{t.descriptionProcessed}}</td>
                         <td class="amount  text-right">
-                            <span data-ng-class="{negativeAm : t.flow == 'OUT'}"> <span data-ng-show="t.flow == 'OUT' || t.flow == 'INNER_OUT'">-</span> {{t.amount | maney}} </span>
+                            <span data-ng-class="{negativeAm : t.flow == 'OUT' || t.flow == 'INNER_OUT'}"> <span data-ng-show="t.flow == 'OUT' || t.flow == 'INNER_OUT'">-</span>
+                                {{t.amount | maney}}
+                            </span>
                         </td>
                         <td class="category">
                             <tags-input class="bootstrap" on-tag-added="categoryUpdated(t, $tag)"  add-from-autocomplete-only="true" max-tags="2" ng-class="{'has-tags': t.category.length > 0}"  ng-model="t.category" display-property="name">
