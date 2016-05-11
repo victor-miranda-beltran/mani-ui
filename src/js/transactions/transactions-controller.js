@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mani').controller('TransactionsController', function TransactionsController($scope, transactionsService){
+angular.module('mani').controller('TransactionsController', function TransactionsController($scope, transactionsService, categoriesService){
 
 	$scope.pagination = {
 		itemsPerPage: 10,
@@ -21,13 +21,16 @@ angular.module('mani').controller('TransactionsController', function Transaction
 		dateEnd: ''
 	};
 
+	$scope.categoryUpdated = function(transaction, cat) {
+		transactionsService.setCategory(transaction, cat);
+	};
+
 	$scope.updateFilter = function(){
 
+		console.log('updating filter');
 		if (!$scope.transactions) {
 			return;
 		}
-
-		console.log($scope.accounts);
 
 		var shownAccounts = $scope.accounts.filter(function(a) {return a.shown;}).map(function(a){return a.accountId});
 
@@ -35,7 +38,7 @@ angular.module('mani').controller('TransactionsController', function Transaction
 				//account filter
 				.filter(
 					function(t) {
-						return shownAccounts.filter(function(a){ return a == t.accountId}).length == 1;
+						return shownAccounts.filter(function(a){ return a == t.account.id}).length == 1;
 					})
 				//amount filter
 				.filter(
@@ -54,6 +57,7 @@ angular.module('mani').controller('TransactionsController', function Transaction
 
 		$scope.groupToPages();
 	};
+
 
 	var updateTotalAmounts = function() {
 
@@ -76,10 +80,10 @@ angular.module('mani').controller('TransactionsController', function Transaction
 		$scope.accounts = [];
 
 		transactions.forEach(function(t) {
-			if (!$scope.accounts[t.accountId]) {
-				$scope.accounts[t.accountId] = {
-					accountId : t.accountId,
-					accountName : t.accountName,
+			if (!$scope.accounts[t.account.id]) {
+				$scope.accounts[t.account.id] = {
+					accountId : t.account.id,
+					accountName : t.account.alias,
 					shown: true
 				}
 			}
@@ -143,7 +147,8 @@ angular.module('mani').controller('TransactionsController', function Transaction
 	};
 
 	$scope.loadCategories = function(query) {
-		return [{ id:1, name: 'Groceries' }, {  id:2, name: 'Online shopping' }, { id: 3, name: 'Salary' }, { id:4,name: 'Yeah' }];
+		console.log(query);
+		return categoriesService.findCategories(query);
 	};
 
 

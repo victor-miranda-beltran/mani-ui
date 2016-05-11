@@ -47,7 +47,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="selectbasic">Category</label>
                             <div class="col-md-8">
-                                <tags-input placeholder="Select categories" ng-model="filter.categories">
+                                <tags-input add-from-autocomplete-only="true" placeholder="Select categories" display-property="name" ng-model="filter.categories">
                                     <auto-complete source="loadCategories($query)"></auto-complete>
                                 </tags-input>
                             </div>
@@ -111,24 +111,24 @@
                 <table id="transactions-table" style="width: 100%">
                     <thead class="columns">
                         <tr>
-                            <th class="date text-center ">Date</th>
-                            <th class="account  text-center" >Account</th>
-                            <th class="description text-center ">Description</th>
-                            <th class="amount text-right ">Amount</th>
-                            <th class="category text-center">Category</th>
+                            <th class="date col-md-1  ">Date</th>
+                            <th class="account col-md-2 " >Account</th>
+                            <th class="description ">Description</th>
+                            <th class="amount col-md-1 text-right ">Amount</th>
+                            <th class="category  col-md-2 text-center">Category</th>
                         </tr>
                     </thead>
 
                     <tbody>
                     <tr class="transaction" data-account-id="{{t.accountId}}" data-ng-class="{evenrow: $index%2 == 0}" data-ng-repeat="t in pagedItems[pagination.currentPage] ">
-                        <td class="date ">{{t.date | date}}</td>
-                        <td class="account ">{{t.accountName}}</td>
-                        <td class="description ">{{t.description}}</td>
+                        <td class="date ">{{t.date | date : 'dd/MM/yy'}}</td>
+                        <td class="account ">{{t.account.alias}}</td>
+                        <td class="description ">{{t.descriptionProcessed}}</td>
                         <td class="amount  text-right">
-                            <span data-ng-class="{negativeAm : t.flow == 'OUT'}"> {{t.amount | maney}} </span>
+                            <span data-ng-class="{negativeAm : t.flow == 'OUT'}"> <span data-ng-show="t.flow == 'OUT' || t.flow == 'INNER_OUT'">-</span> {{t.amount | maney}} </span>
                         </td>
                         <td class="category">
-                            <tags-input class="bootstrap"  add-from-autocomplete-only="true" max-tags="2" ng-class="{'has-tags': t.category.length > 1}"  ng-model="t.category" display-property="name">
+                            <tags-input class="bootstrap" on-tag-added="categoryUpdated(t, $tag)"  add-from-autocomplete-only="true" max-tags="2" ng-class="{'has-tags': t.category.length > 0}"  ng-model="t.category" display-property="name">
                                 <auto-complete source="loadCategories($query)"></auto-complete>
                             </tags-input>
                         </td>

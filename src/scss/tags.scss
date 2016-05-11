@@ -8,3 +8,74 @@
     padding: 0;
   }
 }
+
+
+
+tags-input.has-tags input {
+  display: none;
+}
+
+.host .tags {
+  padding: 0;
+  box-shadow: none;
+  border:1px solid #DFDFDF;
+  word-wrap: break-word;
+  cursor: text;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  margin:0;
+  padding: 0;
+
+}
+
+
+.bootstrap .tags {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+.bootstrap .tags.focused {
+  border-color: #66afe9;
+}
+
+.bootstrap .tags .tag-item {
+  background: #428bca;
+  border: 1px solid #357ebd;
+  border-radius: 2px;
+  color: #fff;
+}
+
+.bootstrap .tags .tag-item.selected {
+  background: #d9534f;
+  border: 1px solid #d43f3a;
+  border-radius: 2px;
+  color: #fff;
+}
+
+.bootstrap .tags .tag-item button {
+  background: transparent;
+  color: #000;
+  opacity: .4;
+}
+
+.bootstrap .autocomplete {
+  border-radius: 4px;
+}
+
+.bootstrap .autocomplete .suggestion-item.selected {
+  color: #262626;
+  background-color: #e9e9e9;
+}
+
+.bootstrap .autocomplete .suggestion-item em {
+  font-weight: normal;
+  background-color: #ffff00;
+}
+
+.bootstrap .autocomplete .suggestion-item.selected em {
+  color: #262626;
+  background-color: #ffff00;
+}
