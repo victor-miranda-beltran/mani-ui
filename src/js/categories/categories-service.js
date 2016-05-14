@@ -7,7 +7,7 @@ angular.module('mani').service('categoriesService', function CategoriesService($
 
     this.findCategories = function(filter) {
         return $http({
-            url: 'http://localhost:8080/categories?filter='+filter,
+            url: 'http://192.168.0.2:9002/categories?filter='+filter,
             method: "GET"
         });
     };

@@ -5,7 +5,7 @@ angular.module('mani').service('transactionsService', function TransactionsServi
 	this.getTransactions = function(callback, errorFn) {
 
 		$http({
-			url: 'http://localhost:8080/transactions',
+			url: 'http://192.168.0.2:9002/transactions',
 			method: "GET"
 		}).then(function(res){
 
@@ -22,6 +22,6 @@ angular.module('mani').service('transactionsService', function TransactionsServi
 	};
 
 	this.setCategory = function(transaction, cat) {
-		$http.put('http://localhost:8080/transactions/'+transaction.id+'/category',cat);
+		$http.put('http://192.168.0.2:9002/transactions/'+transaction.id+'/category',cat);
 	}
 });
