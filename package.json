@@ -9,8 +9,7 @@
   "author": "Victor Miranda",
   "license": "ISC",
   "dependencies": {
-    "angular-ui-bootstrap": "^1.3.2",
-    "gulp": "^3.9.1"
+    "angular-ui-bootstrap": "^1.3.2"
   },
   "devDependencies": {
     "del": "^2.2.0",
