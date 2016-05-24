@@ -2,73 +2,7 @@
 
 #transactions {
 
-  .row {
-    padding :0px;
-    margin: 0px;
-  }
 
-  #filter-body {
-    .form-group {
-     height: 2em;
-    }
-  }
-
-  #transactions-list {
-
-    .header {
-      font-size: 1em;
-
-      #search-input {
-        margin:5px;
-      }
-    }
-
-    .summary-amount {
-      margin: 0px 5px;
-      padding: 0px;
-      span {
-        display: inline-block;
-        width: 115px;
-      }
-    }
-
-    #transactions-table {
-      border-collapse: collapse;
-
-      td {
-        padding-top:1px;
-        padding-bottom:1px;
-        padding-right:3px;
-      }
-
-      td:first-child {
-        padding-left:5px;
-        padding-right:0;
-      }
-
-      .evenrow {
-        background: #F0F0F0;
-      }
-
-      .category {
-        min-width: 150px;
-        max-width: 150px;
-      }
-
-      .amount {
-        .negativeAm {
-          color: darkred;
-        }
-      }
-    }
-
-    .columns {
-      border:0;
-      background: $color-header-bg-soft;
-      color: white;
-    }
-
-  }
 
 }
 

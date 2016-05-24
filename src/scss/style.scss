@@ -1,91 +1,149 @@
 @import "variables.scss";
-$icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "../../bower_components/angular-material/angular-material.scss";
 
-html {
-  height: 100%;
-  font-family: 'Montserrat', sans-serif;
+body[ng-cloak] {
+  display:none;
 }
 
-body {
-  box-sizing: border-box;
-  height: 100%;
-  background-color: $color-bg-main;
-  color: $color-text-main;
-  cursor: default;
-}
-
-a {
-  color: $color-text-main;
-}
-
-a:visited, a:hover {
-  color: $color-text-main;
-}
-
-.fill-h {
-  height: 100%;
-}
-
-.fill-w {
-  width: 100%;
-}
-
-.fill {
-  @extend .fill-h;
-  @extend .fill-w;
-}
-
-
-.panel {
-  background: #fff;
-  padding:0;
-  border:0;
-  border-radius: $border-radius-base;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  transition: all 0.2s ease-in-out;
-
-
-
-  .header {
-    border-radius: $border-radius-base;
-    margin-bottom:0;
-    height: 50px;
-    color: white;
-    font-size: 1.2em;
-    background: $color-header-bg;
+// LAYOUT
+  body {
+    color: $text-color;
   }
 
-  .body {
-    padding:10px;
-  }
-
+.toolbar-button {
+  min-width: 20px;
 }
 
-.panel-pagination {
-  margin-top: 10px;
-  margin-bottom:0;
-  padding: 0px;
+.share-label {
+  vert-align: middle;
+  margin-left: 10px;
+}
 
-  .pagination {
+.page-content {
+  background-color: $main-bg-color;
+}
+
+.widget-progress {
+  width: 95% !important;
+  margin-left: 10px;
+}
+
+
+
+// COMPONENTS
+.messages {
+  position: relative;
+
+  &-content {
+    height: 100vh;
+  }
+}
+
+.notifications-label {
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  border-radius: 50%;
+  position: absolute;
+  font-size: 12px;
+  top: 2px;
+  right: 2px;
+  background-color: $warning-color;
+}
+
+// panel-widget
+.panel-widget {
+  background-color: white;
+
+  &-toolbar {
+    box-shadow: none;
     margin: 0;
-    padding: 0;
+  }
+
+  &-tittle {
+    color: $text-color;
   }
 }
 
-div.tablediv {
-  padding: 5px;
-  background: white;
-  margin-left: 0;
+.options {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.options.ng-hide {
+  opacity:0;
+}
+
+.fixed-height-widget {
+  height: $widget-height;
+}
+
+// charts
+.donut-chart-title{
+  text-align: center;
+}
+
+.custom-tooltip {
+  font-size: $font-size-large;
+  color: $text-color;
+  text-align: center;
+}
+
+
+// OVERRIDES
+// angular material overrides
+md-radio-group {
+  border: none;
+}
+
+md-icon {
+  height: auto;
+}
+
+md-sidenav.md-locked-open.md-sidenav-left {
+  width: $left-sidenav-width;
+  min-width: $left-sidenav-width;
+  max-width: $left-sidenav-width;
+}
+
+a.md-button.md-warn.md-raised, a.md-button.md-warn.md-fab, .md-button.md-warn.md-raised, .md-button.md-warn.md-fab {
+  color: white;
+}
+
+md-radio-button.md-accent.md-checked .md-label span {
+  color: $accent-color;
+}
+
+.md-toolbar-tools h1 {
+  font-size: $font-size-large;
+}
+
+
+md-backdrop.md-sidenav-backdrop {
+  position: fixed;
+}
+
+// libs overrides
+.material-icons {
+  vertical-align: middle;
+}
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+
+.orange .md-bar2 {
+  background-color: orange;
+}
+
+.orange .md-container {
+  background-color: rgb(255, 236, 201)
 }
 
 
 
-
-input {
-  border-radius: 0;
-  border-shadow: none;
-}
-
-@import "tags.scss";
+@import "table.scss";
 @import "transactions.scss";

@@ -1,86 +1,119 @@
 
 <!doctype html>
-<html lang="en" data-ng-app="mani">
+<html lang="en" ng-app="mani">
 
 <head>
-
     <meta charset="UTF-8">
     <title>Mani</title>
     <link rel="stylesheet" href="css/style.min.css">
     <link rel="stylesheet" href="js/ng-tags-input/ng-tags-input.min.css">
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet"
+          href="http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic">
 </head>
 
-<body>
+<body  ng-cloak layout="column" ng-controller="MainController">
 
-<div id="app">
+<div layout="row" layout-fill>
 
-    <nav class="navbar navbar-inverse navbar-static-top">
+    <md-sidenav md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left"
+                class="md-whiteframe-z2 md-sidenav-left">
+        <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2">
+            <md-button layout="row" layout-align="center center" class="md-toolbar-tools md-warn"
+                       href="https://github.com/flatlogic/angular-material-dashboard">
+                <h1>mani</h1>
+            </md-button>
+        </md-toolbar>
 
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Mani</a>
+        <md-button ng-repeat-start="item in menuItems" layout="column" layout-align="center center"
+                   flex class="capitalize"
+                   ui-sref-active="md-warn" ng-href="#/{{item.href}}">
+            <div hide-sm hide-md class="md-tile-content">
+                <i class="material-icons md-36">{{item.icon}}</i>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">Accounts</a></li>
-                    <li><a href="#contact">Transactions</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Nav header</li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="./">victor <span class="sr-only">(current)</span></a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
-        </div>
-    </nav>
+            <div class="md-tile-content">
+                {{item.name}}
+            </div>
+        </md-button>
+        <md-divider ng-repeat-end></md-divider>
+        <md-button ng-click="vm.showActions($event)" layout-align="center center">
+            <div class="md-tile-content">
+                Actions
+            </div>
+        </md-button>
+    </md-sidenav>
 
-    <div id="main">
+    <div layout="column" flex>
+        <md-toolbar layout="row" layout-align="end center">
+            <md-button hide-sm class="toolbar-button" aria-label="Search">
+                <i class="material-icons">search</i>
+            </md-button>
+            <md-button hide-sm class="toolbar-button" aria-label="Notifications">
+                <i class="material-icons">notifications</i>
+                <span class="notifications-label">7</span>
+            </md-button>
+            <md-button hide-sm class="toolbar-button" aria-label="Settings" ng-click="vm.toggleRightSidebar()">
+                <i class="material-icons">menu</i>
+            </md-button>
+            <md-button hide-gt-sm ng-click="vm.toggleItemsList()" aria-label="Menu">
+                <i class="material-icons">menu</i>
+            </md-button>
+        </md-toolbar>
 
-        <div id="content" ng-view=""></div>
+        <md-content flex class="md-padding page-content">
+            <ng-view />
+        </md-content>
+    </div>
+
+    <md-sidenav md-component-id="right"
+                class="md-whiteframe-z2 md-sidenav-right">
+        <md-toolbar>
+            <md-toolbar class="md-warn" layout="row" layout-align="center center">
+
+                <md-menu md-offset="0 20">
+                    <md-button class="capitalize" ng-click="$mdOpenMenu()" aria-label="Open menu">
+                        <span>Richard Feynman</span>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                    </md-button>
+                    <md-menu-content width="3">
+                        <md-menu-item><md-button ng-click="$mdCloseMenu()" ui-sref="home.profile">Profile</md-button></md-menu-item>
+                        <md-menu-item><md-button ng-click="$mdCloseMenu()" ui-sref="home.dashboard">Log out</md-button></md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </md-toolbar>
+        </md-toolbar>
+
+        <section>
+            <md-toolbar md-theme="grey" class="md-hue-1">
+                <div class="md-toolbar-tools">
+                    <h3>Messages</h3>
+                </div>
+            </md-toolbar>
+
+        </section>
+    </md-sidenav>
 
     </div>
 
-    <div id="footer" >
+    <script src="js/angular/angular.js"></script>
+    <script src="js/angular-animate/angular-animate.js"></script>
+    <script src="js/angular-material/angular-material.js"></script>
+    <script src="js/angular-aria/angular-aria.js"></script>
+    <script src="js/angular-route/angular-route.js"></script>
+    <script src="js/ng-tags-input/ng-tags-input.min.js"></script>
 
-    </div>
+    <script src="views/transactions.js"></script>
 
-
-</div>
-
-<script src="js/jquery/dist/jquery.js"></script>
-<script src="js/bootstrap/dist/js/bootstrap.js"></script>
-<script src="js/angular/angular.js"></script>
-<script src="js/angular-route/angular-route.js"></script>
-<script src="js/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script src="js/ng-tags-input/ng-tags-input.min.js"></script>
-
-<script src="views/transactions.js"></script>
-<script src="js/app.js"></script>
-<script src="js/categories/categories-service.js"></script>
-<script src="js/transactions/transactions-service.js"></script>
-<script src="js/transactions/transactions-controller.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/categories/categories-service.js"></script>
+    <script src="js/transactions/transactions-service.js"></script>
+    <script src="js/transactions/transactions-controller.js"></script>
 </body>
+
+
+
+
 
 </html>

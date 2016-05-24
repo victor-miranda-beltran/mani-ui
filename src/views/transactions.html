@@ -1,115 +1,7 @@
-<div id="transactions">
+<section layout-margin class="md-whiteframe-z1 panel-widget">
 
-    <div class="row">
-
-        <div class="col-md-3">
-
-            <div id="advanced-filter" class="panel">
-
-                <div class="header">
-                    <i class="fa fa-filter" aria-hidden="true"></i>
-                     Advanced filter
-                </div>
-
-
-                <div class="body form" id="filter-body">
-
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="selectbasic">Dates</label>
-                            <div class="col-md-8">
-                                <select id="selectbasic" name="selectbasic"  class="form-control">
-                                    <option value="1">All dates</option>
-                                    <option value="2">This month</option>
-                                    <option value="">Last 6 months</option>
-                                    <option value="">Customised</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="selectbasic">Amount</label>
-                            <div class="col-md-4">
-                                <input type="text" data-ng-model="filter.amountMin" data-ng-keyup="updateFilter()" placeholder="min value" class="form-control" />
-                            </div>
-
-                            <div class="col-md-4">
-                                <input type="text" data-ng-model="filter.amountMax" data-ng-keyup="updateFilter()" placeholder="max value"  class="form-control" />
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="selectbasic">Category</label>
-                            <div class="col-md-8">
-                                <tags-input add-from-autocomplete-only="true" on-tag-added="updateFilter()" on-tag-removed="updateFilter()" placeholder=""  display-property="name" ng-model="filter.categories">
-                                    <auto-complete source="loadCategories($query)"></auto-complete>
-                                </tags-input>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Accounts</label>
-                            <div class="col-md-8">
-                                <div data-ng-repeat="account in accounts track by $index">
-                                    <div class="account" data-ng-show="account">
-                                        <label for="accounts-{{account.accountId}}">
-                                            <input type="checkbox" value="{{account.accountId}}" data-ng-model="account.shown" data-ng-change="updateFilter()" id="accounts-{{account.accountId}}" value="{{account.accountId}}" checked="checked">
-                                            {{account.accountName}}
-                                        </label>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-        </div>
-
-        <div class="col-md-9 transactions-area">
-
-            <div id ="transactions-list" class="panel">
-
-                <div class="header">
-                    <div class="row">
-                        <div class="col-md-2">
-                            Transactions: {{filteredItems.length}}
-                        </div>
-                        <div class="col-md-4">
-                            <p class="summary-amount"><span>Total income: </span> {{filteredIncome | maney : {decimals:0} }} </p>
-                            <p class="summary-amount"><span>Avg per month: </span>  {{filteredIncome | maney : {decimals:0} }}</p>
-                        </div>
-
-                        <div class="col-md-4">
-                            <p class="summary-amount"> <span>Total expenditure: </span>  {{filteredExpenditure | maney : {decimals:0} }} </p>
-                            <p class="summary-amount"><span>Avg per month: </span> {{filteredExpenditure | maney : {decimals:0} }}</p>
-                        </div>
-
-                        <div class="col-md-2">
-                            <input id="search-input"  class="form-control" data-ng-model="transactionFilter" data-ng-keyup="updateFilter()" placeholder="filter ..." type="text">
-                        </div>
-                    </div>
-
-                </div>
-
-                <table id="transactions-table" style="width: 100%">
-                    <thead class="columns">
+         <table id="transactions-table" class="table table-hover table-bordered">
+                    <thead>
                         <tr>
                             <th class="date col-md-1  ">Date</th>
                             <th class="account col-md-2 " >Account</th>
@@ -120,7 +12,7 @@
                     </thead>
 
                     <tbody>
-                    <tr class="transaction" data-account-id="{{t.accountId}}" data-ng-class="{evenrow: $index%2 == 0}" data-ng-repeat="t in pagedItems[pagination.currentPage] ">
+                    <tr class="transaction" data-account-id="{{t.accountId}}"  data-ng-repeat="t in pagedItems[0] ">
                         <td class="date ">{{t.date | date : 'dd/MM/yy'}}</td>
                         <td class="account ">{{t.account.alias}}</td>
                         <td class="description ">{{t.descriptionProcessed}}</td>
@@ -130,49 +22,12 @@
                             </span>
                         </td>
                         <td class="category">
-                            <tags-input class="bootstrap" on-tag-added="categoryUpdated(t, $tag)" placeholder="Select category" add-from-autocomplete-only="true" max-tags="2" ng-class="{'has-tags': t.category.length > 0}"  ng-model="t.category" display-property="name">
-                                <auto-complete source="loadCategories($query)"></auto-complete>
-                            </tags-input>
                         </td>
                     </tr>
                     </tbody>
 
             </table>
 
+    <pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{desserts.count}}" md-on-paginate="getDesserts" md-page-select></pagination>
 
-                <div class="pagination panel panel-pagination pull-right">
-                    <ul class="pagination">
-
-                        <li>
-                            <a href ng-click="setPage(0)" >First</a>
-                        </li>
-
-                        <li ng-class="{disabled: currentPage == 0}">
-                            <a href ng-click="prevPage()">« Prev</a>
-                        </li>
-
-                        <li ng-repeat="n in pagination.range"
-                            ng-class="{active: n == pagination.currentPage}"
-                            ng-click="setPage()">
-                            <a href ng-bind="n + 1">1</a>
-                        </li>
-
-                        <li ng-class="{disabled: (pagination.currentPage) == pagedItems.length - 1}">
-                            <a href ng-click="nextPage()">Next »</a>
-                        </li>
-
-                        <li>
-                            <a href ng-click="setPage(pagedItems.length - 1)" >Last</a>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>
-
-
-        </div>
-
-     </div>
-
-
-</div>
+    </section>

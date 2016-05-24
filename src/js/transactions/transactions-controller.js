@@ -5,7 +5,7 @@ angular.module('mani').controller('TransactionsController', function Transaction
 	$scope.pagination = {
 		itemsPerPage: 10,
 		currentPage: 0,
-		pagesShown: 10
+		pagesShown: 5
 	};
 
 	$scope.pagedItems= [];
@@ -105,7 +105,9 @@ angular.module('mani').controller('TransactionsController', function Transaction
 			return t2.date - t1.date;
 		});
 
+
 		$scope.groupToPages();
+
 	});
 
 	$scope.groupToPages = function () {

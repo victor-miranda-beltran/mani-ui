@@ -1,19 +1,12 @@
-$color-bg-main: rgb(64,64,64);
-$color-bg-alt: #d98328;
-//$color-bg-main: #FEFEFE;
-
-$color-text-main: #191919;
-
-$even: #ECF0F1;
-
-$color-bankinter : rgb(240,111,36);
-
-$body-bg:              $color-bg-main;
-
-$navbar-default-bg: $color-bankinter;
-
-$color-header-bg : rgb(66,139,202);
-$color-header-bg-soft : lighten($color-header-bg,5);
+// COLORS
+$main-bg-color: #ECECEC;
+$text-color: #7A7A7A;
+$accent-color: rgb(0, 150, 136);
+$warning-color: #E75753;
 
 
-$border-radius-base : 0;
+// VARIABLES
+$left-sidenav-width: 110px;
+$widget-height: 310px;
+$font-weight-bold: 600;
+$font-size-large: 22px;

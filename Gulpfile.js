@@ -20,7 +20,9 @@ var dist = {
 
 var paths = {
 	scripts : 'src/js/**/*',
+	images : 'src/img/**/*',
 	views : 'src/views/**/*',
+	index: 'src/index.html',
 	scss: 'src/scss/**/*'
 };
 
@@ -28,6 +30,12 @@ gulp.task('scripts', function() {
 	return gulp.src('src/js/**/*.js')
 		//.pipe(concat('main.js'))
 		.pipe(gulp.dest('dist/js'));
+});
+
+gulp.task('images', function() {
+	return gulp.src('src/imgs/**/*')
+			//.pipe(concat('main.js'))
+			.pipe(gulp.dest('dist/imgs'));
 });
 
 gulp.task('sass', function() {
@@ -48,8 +56,10 @@ gulp.task('partials', function () {
 // Rerun the task when a file changes
 gulp.task('watch', function() {
 	gulp.watch(paths.scripts, ['scripts']);
+	gulp.watch(paths.images, ['images']);
 	gulp.watch(paths.views, ['partials']);
-	gulp.watch(paths.scss, ['sass']);
+	gulp.watch(paths.scss, ['sass'])
+	gulp.watch(paths.index, ['index']);
 });
 
 gulp.task('bower', function() {
@@ -70,4 +80,4 @@ gulp.task('clean', function () {
 gulp.task('serve', serve('dist'));
 
 // Default Task
-gulp.task('default', ['bower','scripts','partials','index','sass','watch']);
+gulp.task('default', ['bower','index','scripts','images','partials','index','sass','watch']);
