@@ -2,7 +2,28 @@
 
 #transactions {
 
+  md-chips-wrap {
+    box-shadow: none;
+  }
 
+  .md-chips .md-chip {
+  background: lavender;
+  }
+
+  .md-chips.md-focused, md-chips .md-chips.md-focused {
+    box-shadow: 0 2px rgb(229,57,53);
+  }
+
+  .md-chips .md-chip .md-chip-remove md-icon {
+  }
+
+  td.category {
+    padding:0;
+  }
+
+  rzslider {
+    margin-top: 60px;
+  }
 
 }
 

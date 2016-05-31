@@ -1,0 +1,30 @@
+@import "variables.scss";
+
+
+.host {
+  min-width: 120px;
+  margin: 0 !important;
+}
+
+.host .tags {
+  box-shadow: none;
+  border-width: 0;
+  background: transparent;  margin-top:0;
+
+}
+
+.md-input-focused  {
+  color: transparent !important;
+}
+
+::-webkit-input-placeholder {
+  color: transparent !important;
+}
+
+.tags.focused {
+  box-shadow: 0 0 3px 1px rgba(5,139,242,0) !important;
+}
+
+
+
+

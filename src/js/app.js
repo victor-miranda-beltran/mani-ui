@@ -9,16 +9,9 @@ angular
 		'templates',
 		'ngMaterial',
 		'ngRoute',
-		'ngTagsInput'
+		'angularUtils.directives.dirPagination',
+		'rzModule'
 	])
-	.factory('httpRequestInterceptor', function () {
-		return {
-			request: function (config) {
-				config.headers['x-auth-token'] = 'victor:ead07c4d409eaecd4d2bdea6200a62e09397e119:d4fde4adf83304afd6da29264a863d36ae481e45';
-				return config;
-			}
-		};
-	})
 	.config(function ($routeProvider, $httpProvider, $mdThemingProvider) {
 		$routeProvider
 			.when('/transactions', {
@@ -28,8 +21,20 @@ angular
 			.otherwise({
 				redirectTo: '/transactions'
 			});
-		$httpProvider.interceptors.push('httpRequestInterceptor');
 
+
+		$httpProvider.interceptors.push(function($q) {
+			return {
+				'request': function(config) {
+					config.headers['x-auth-token'] = 'victor:ead07c4d409eaecd4d2bdea6200a62e09397e119:d4fde4adf83304afd6da29264a863d36ae481e45';
+					return config;
+				},
+
+				'response': function(response) {
+					return response;
+				}
+			};
+		});
 		$mdThemingProvider.theme('default');
 
 		$mdThemingProvider
@@ -120,11 +125,6 @@ angular
 			};
 		})
 
-		.directive ('pagination', function() {
-			function compile(tElement) {
-				tElement.addClass('md-table-pagination');
-			}
-		})
 
 
 

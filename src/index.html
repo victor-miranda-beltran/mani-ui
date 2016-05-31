@@ -5,8 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Mani</title>
+
     <link rel="stylesheet" href="css/style.min.css">
-    <link rel="stylesheet" href="js/ng-tags-input/ng-tags-input.min.css">
+    <link rel="stylesheet" href="js/angularjs-slider/dist/rzslider.css">
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -67,33 +68,7 @@
         </md-content>
     </div>
 
-    <md-sidenav md-component-id="right"
-                class="md-whiteframe-z2 md-sidenav-right">
-        <md-toolbar>
-            <md-toolbar class="md-warn" layout="row" layout-align="center center">
 
-                <md-menu md-offset="0 20">
-                    <md-button class="capitalize" ng-click="$mdOpenMenu()" aria-label="Open menu">
-                        <span>Richard Feynman</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                    </md-button>
-                    <md-menu-content width="3">
-                        <md-menu-item><md-button ng-click="$mdCloseMenu()" ui-sref="home.profile">Profile</md-button></md-menu-item>
-                        <md-menu-item><md-button ng-click="$mdCloseMenu()" ui-sref="home.dashboard">Log out</md-button></md-menu-item>
-                    </md-menu-content>
-                </md-menu>
-            </md-toolbar>
-        </md-toolbar>
-
-        <section>
-            <md-toolbar md-theme="grey" class="md-hue-1">
-                <div class="md-toolbar-tools">
-                    <h3>Messages</h3>
-                </div>
-            </md-toolbar>
-
-        </section>
-    </md-sidenav>
 
     </div>
 
@@ -102,9 +77,12 @@
     <script src="js/angular-material/angular-material.js"></script>
     <script src="js/angular-aria/angular-aria.js"></script>
     <script src="js/angular-route/angular-route.js"></script>
-    <script src="js/ng-tags-input/ng-tags-input.min.js"></script>
+    <script src="js/angularjs-slider/dist/rzslider.js"></script>
+    <script src="js/angularUtils-pagination/dirPagination.js"></script>
 
     <script src="views/transactions.js"></script>
+
+    <script src="views/pagination.tpl.js"></script>
 
     <script src="js/app.js"></script>
     <script src="js/categories/categories-service.js"></script>

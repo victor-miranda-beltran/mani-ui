@@ -1,33 +1,165 @@
-<section layout-margin class="md-whiteframe-z1 panel-widget">
+<section id="transactions" layout="row"  flex>
 
-         <table id="transactions-table" class="table table-hover table-bordered">
-                    <thead>
-                        <tr>
-                            <th class="date col-md-1  ">Date</th>
-                            <th class="account col-md-2 " >Account</th>
-                            <th class="description ">Description</th>
-                            <th class="amount col-md-1 text-right ">Amount</th>
-                            <th class="category  col-md-2 text-center">Category</th>
-                        </tr>
-                    </thead>
+    <section class="md-whiteframe-z1 "  flex >
 
-                    <tbody>
-                    <tr class="transaction" data-account-id="{{t.accountId}}"  data-ng-repeat="t in pagedItems[0] ">
-                        <td class="date ">{{t.date | date : 'dd/MM/yy'}}</td>
-                        <td class="account ">{{t.account.alias}}</td>
-                        <td class="description ">{{t.descriptionProcessed}}</td>
-                        <td class="amount  text-right">
-                            <span data-ng-class="{negativeAm : t.flow == 'OUT' || t.flow == 'INNER_OUT'}"> <span data-ng-show="t.flow == 'OUT' || t.flow == 'INNER_OUT'">-</span>
-                                {{t.amount | maney}}
-                            </span>
+        <md-toolbar md-theme="custom" class="md-theme-light">
+            <div class="md-toolbar-tools">
+                <h1 class="md-toolbar-tools">Transactions</h1>
+                <span  flex="" class="flex"></span>
+                <button class="md-icon-button md-button md-custom-theme md-ink-ripple" type="button"
+                        ng-show="true" ng-click="showOptions = !showOptions" aria-label="Show options"
+                        aria-hidden="false"><i class="material-icons ng-scope">more_vert</i>
+                    <div class="md-ripple-container"></div>
+                </button>
+            </div>
+        </md-toolbar>
+
+        <md-content>
+
+            <table id="transactions-table" class="table table-hover disable-animations">
+                <thead>
+                    <tr >
+                        <th class="date ">Date</th>
+                        <th class="account  " >Account</th>
+                        <th class="description "  >Description</th>
+                        <th class="amount  text-right " >Amount</th>
+                        <th class="category text-center"  >Category</th>
+                    </tr>
+                </thead>
+
+                <tbody >
+                    <tr class="transaction" data-account-id="{{t.accountId}}" dir-paginate="t in filteredItems | itemsPerPage: 10" pagination-id="transpag">
+                        <td class="date " >{{t.date | date : 'dd/MM/yy'}}</td>
+                        <td class="account "  >{{t.account.alias}}</td>
+                        <td class="description " >{{t.descriptionProcessed}}</td>
+                        <td class="amount  text-right" >
+                            {{t.amount}}
                         </td>
                         <td class="category">
+                            <md-chips ng-model="t.category"
+                                      md-on-add="categoryUpdated(t)"
+                                      md-on-remove="categoryDeleted(t)"
+                                      md-require-match="true"
+                                      placeholder="Select category">
+
+                                <md-chip-template>
+
+                                    <span>
+                                      {{$chip.name}}
+                                    </span>
+
+                                </md-chip-template>
+                                <md-autocomplete
+                                        ng-hide="t.category.length > 0"
+                                        md-min-length="1"
+                                        md-selected-item="selectedItem"
+                                        md-no-cache="true"
+                                        md-search-text="searchText"
+                                        md-search-text-change="loadCategories(searchText)"
+                                        md-items="item in categoriesFiltered"
+                                        md-item-text="item.name"
+                                        placeholder="Select category filter">
+                                    <md-item-template>
+                                        <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.name}}
+                                        </span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No categories matching  {{item}} were found.
+                                    </md-not-found>
+                                </md-autocomplete>
+
+
+                            </md-chips>
                         </td>
                     </tr>
-                    </tbody>
+                </tbody>
 
+                <tfoot>
+                    <tr>
+                        <th colspan="5">
+                            <dir-pagination-controls pagination-id="transpag" boundary-links="true" template-url="views/pagination.tpl.html">
+                            </dir-pagination-controls>
+                        </th>
+                    </tr>
+                </tfoot>
             </table>
-
-    <pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{desserts.count}}" md-on-paginate="getDesserts" md-page-select></pagination>
-
+        </md-content>
     </section>
+
+    <md-sidenav class="md-sidenav-right md-whiteframe-z1" md-component-id="right"
+                style="min-width:340px;margin-left:8px"
+                md-is-locked-open="showOptions || $mdMedia('gt-md')">
+
+        <md-toolbar class="md-theme-light">
+            <h1 class="md-toolbar-tools">Filter transactions</h1>
+        </md-toolbar>
+
+        <md-content layout="column" >
+
+            <form layout="column" layout-padding>
+                <md-input-container md-no-float="true">
+                    <label for="filterdesc">Description</label>
+                    <input type="text" id="filterdesc" ng-keyup="updateFilter()" placeholder="Description"
+                           ng-model="filter.description" md-autofocus>
+                </md-input-container>
+
+                <md-input-container md-no-float="true" layout-padding >
+                    <label for="testInput">Accounts</label>
+                    <br />
+                    <div flex layout="column">
+                        <md-checkbox ng-repeat="item in accounts" ng-model="item.shown" ng-change="updateFilter()">
+                            {{ item.accountName }}
+                        </md-checkbox>
+                    </div>
+
+
+                </md-input-container>
+
+                <md-input-container >
+                    <label for="testInput">Amount</label>
+
+                    <rzslider
+                            rz-slider-model="filter.slider.min"
+                            rz-slider-high="filter.slider.max"
+                            rz-slider-options="filter.slider.options"></rzslider>
+                </md-input-container>
+
+                <md-input-container md-no-float="true">
+                    <label for="testInput">Category</label>
+
+                        <md-chips ng-model="filter.categories"
+                                  md-on-add="updateFilter()"
+                                  md-on-remove="updateFilter()"
+                                  md-require-match="true">
+                            <md-chip-template>
+                                <span>
+                                  <strong>{{$chip.name}}</strong>
+                                  <em>({{$chip.flow}})</em>
+                                </span>
+                            </md-chip-template>
+                                    <md-autocomplete
+                                            md-selected-item="selectedItem"
+                                            md-no-cache="true"
+                                            md-search-text="searchText"
+                                            md-search-text-change="loadCategories(searchText)"
+                                            md-items="item in categoriesFiltered"
+                                            md-item-text="item.name"
+                                            placeholder="Select category filter">
+                                        <md-item-template>
+                                            <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.name}} ({{item.flow}})</span>
+                                        </md-item-template>
+                                        <md-not-found>
+                                                No states matching  {{item}} were found.
+                                            </md-not-found>
+                                    </md-autocomplete>
+
+
+                        </md-chips>
+                </md-input-container>
+
+
+            </form>
+
+        </md-content>
+    </md-sidenav>
+</section>

@@ -3,7 +3,7 @@
 angular.module('mani').service('transactionsService', function TransactionsService($http){
 
 	this.getTransactions = function(callback, errorFn) {
-		$http.get('http://hal:8080/transactions')
+		$http.get('http://localhost:8080/transactions')
 				.then(function(res){
 
 				var transactions = res.data.map(function(t) {
@@ -18,8 +18,15 @@ angular.module('mani').service('transactionsService', function TransactionsServi
 		});
 	};
 
-	this.setCategory = function(transaction, cat) {
-		$http.put('http://localhost:8080/transactions/'+transaction.id+'/category',cat);
-	}
+	this.setCategory = function(transaction, callback) {
+		$http.put('http://localhost:8080/transactions/'+transaction.id+'/category',transaction.category[0])
+				.success(function (res, status, headers, config) {
+					callback(res);
+				});
+	};
+
+	this.deleteCategory = function(transaction, callback) {
+		$http.delete('http://localhost:8080/transactions/'+transaction.id+'/category');
+	};
 
 });

@@ -5,6 +5,7 @@ body[ng-cloak] {
   display:none;
 }
 
+
 // LAYOUT
   body {
     color: $text-color;
@@ -146,4 +147,5 @@ md-backdrop.md-sidenav-backdrop {
 
 
 @import "table.scss";
+@import "tags.scss";
 @import "transactions.scss";

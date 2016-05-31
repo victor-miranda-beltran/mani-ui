@@ -2,29 +2,55 @@
 
 angular.module('mani').controller('TransactionsController', function TransactionsController($scope, transactionsService, categoriesService){
 
-	$scope.pagination = {
-		itemsPerPage: 10,
-		currentPage: 0,
-		pagesShown: 5
-	};
 
-	$scope.pagedItems= [];
 	$scope.selectedAccounts = [];
 	$scope.filteredItems = [];
-	$scope.transactionFilter = '';
+	$scope.categoriesFiltered = [];
 
 	$scope.filter = {
-		transactionName: '',
+		description: '',
 		amountMin: undefined,
 		amountMax: undefined,
 		categories: [],
 		dateStart: '',
-		dateEnd: ''
+		dateEnd: '',
+		slider : {
+			min: 0,
+			max: 3000,
+			options: {
+				floor: 0,
+				ceil: 3000,
+				translate: function(value) {
+					return '&euro;' + value;
+				},
+				onChange: function() {
+					$scope.updateFilter();
+				}
+			}
+			}
 	};
 
-	$scope.categoryUpdated = function(transaction, cat) {
-		transactionsService.setCategory(transaction, cat);
+
+	$scope.categoryUpdated = function(transaction) {
+		transactionsService.setCategory(transaction, function(res) {
+
+			res.forEach(function(tmod){
+				var tOriginal = $scope.transactions.filter(function(t){return t.id == tmod.id;})[0];
+				tOriginal.category = [tmod.category];
+				console.log(tOriginal);
+				return tmod;
+			});
+
+
+			$scope.updateFilter();
+		});
 	};
+
+	$scope.categoryDeleted = function(transaction) {
+		transactionsService.deleteCategory(transaction);
+	};
+
+	$scope.showOptions = false;
 
 	$scope.updateFilter = function(){
 
@@ -50,41 +76,29 @@ angular.module('mani').controller('TransactionsController', function Transaction
 							} else if (!t.category) {
 								return false;
 							}
-							return shownCategories.indexOf(t.category[0].id) !== -1;
+							return t.category.length && shownCategories.indexOf(t.category[0].id) !== -1;
 						})
 				//amount filter
 				.filter(
 						function(t) {
-							var min = $scope.filter.amountMin || 0;
-							var max = $scope.filter.amountMax || 10000;
+							var min = $scope.filter.slider.min || 0;
+							var max = $scope.filter.slider.max || 10000;
 							return t.amount >= min && t.amount <= max;
 						})
 				//description filter
 				.filter(
 					function(t) {
-						return t.description.toLowerCase().indexOf( $scope.transactionFilter.toLowerCase()) != -1;
+						return t.description.toLowerCase().indexOf( $scope.filter.description.toLowerCase()) != -1;
 					})
 			;
-		$scope.pagination.currentPage = 0;
 
-		$scope.groupToPages();
+		var highest = Math.max.apply(this,$scope.transactions.map( function(o){ return o.amount; }));
+		console.log(highest);
+
+		$scope.filter.slider.options.ceil = 5000;
+
 	};
 
-
-	var updateTotalAmounts = function() {
-
-		$scope.filteredExpenditure = $scope.filteredItems.filter(function(t){
-			return t.flow === 'OUT'
-		}).reduce(function(a,b) {
-			return a.amount || a + b.amount;
-		}, 0);
-
-		$scope.filteredIncome = $scope.filteredItems.filter(function(t){
-			return t.flow === 'IN'
-		}).reduce(function(a,b) {
-			return a.amount || a + b.amount;
-		}, 0);
-	};
 
 	transactionsService.getTransactions(function(transactions){
 
@@ -92,12 +106,16 @@ angular.module('mani').controller('TransactionsController', function Transaction
 		$scope.accounts = [];
 
 		transactions.forEach(function(t) {
-			if (!$scope.accounts[t.account.id]) {
-				$scope.accounts[t.account.id] = {
+
+			if ($scope.accounts.filter(function(a) {return a.accountId == t.account.id;}).length == 0) {
+				$scope.accounts.push({
 					accountId : t.account.id,
 					accountName : t.account.alias,
 					shown: true
-				}
+				});
+			}
+			if (!t.category) {
+				t.category = [];
 			}
 		});
 
@@ -106,71 +124,15 @@ angular.module('mani').controller('TransactionsController', function Transaction
 		});
 
 
-		$scope.groupToPages();
-
+		$scope.updateFilter();
 	});
 
-	$scope.groupToPages = function () {
-		updateTotalAmounts();
-		$scope.pagedItems = [];
-
-		for (var i = 0; i < $scope.filteredItems.length; i++) {
-			if (i % $scope.pagination.itemsPerPage === 0) {
-				$scope.pagedItems[Math.floor(i / $scope.pagination.itemsPerPage)] = [ $scope.filteredItems[i] ];
-			} else {
-				$scope.pagedItems[Math.floor(i / $scope.pagination.itemsPerPage)].push($scope.filteredItems[i]);
-			}
-		}
-
-		movePagination();
-
-	};
-
-	var movePagination = function() {
-
-		var pages = Math.ceil($scope.filteredItems.length / $scope.pagination.itemsPerPage);
-		$scope.pagination.range = Array.apply(null, {length: pages}).map(Number.call, Number);
-
-		if (pages > $scope.pagination.pagesShown) {
-			var itemsToRemove = pages - $scope.pagination.pagesShown;
-			var init = $scope.pagination.currentPage - Math.floor($scope.pagination.pagesShown / 2);
-			if (init < 0) {
-				init = 0;
-			}
-			if (init + $scope.pagination.pagesShown > pages) {
-				init = pages -  $scope.pagination.pagesShown;
-			}
-
-			$scope.pagination.range = $scope.pagination.range.slice(init, init + $scope.pagination.pagesShown);
-		}
-	};
-
-	$scope.prevPage = function () {
-		if ($scope.pagination.currentPage > 0) {
-			$scope.pagination.currentPage--;
-			movePagination();
-		}
-
-	};
-
-	$scope.nextPage = function () {
-		if ($scope.pagination.currentPage < $scope.pagedItems.length - 1) {
-			$scope.pagination.currentPage++;
-			movePagination();
-		}
-	};
-
 	$scope.loadCategories = function(query) {
-		console.log(query);
-		return categoriesService.findCategories(query);
-	};
 
-
-	$scope.setPage = function (page) {
-		$scope.pagination.currentPage = page !== undefined ? page : this.n;
-
-		console.log($scope.pagination.currentPage);
-		movePagination();
+		categoriesService.findCategories(query)
+			.success(function (response) {
+				$scope.categoriesFiltered = response;
+			});
 	};
 
 });

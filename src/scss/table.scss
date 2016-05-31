@@ -22,9 +22,16 @@ $table-border-color:            #e0e0e0;
   transition: $transition-property $transition-time $method;
 }
 
+.disable-animations {
+  .ng-animate {
+    transition: 0s;
+  }
+}
+
 
 //TABLES
 .table {
+
   border-spacing: 0;
   width: 100%;
   max-width: 100%;
@@ -99,6 +106,34 @@ $table-border-color:            #e0e0e0;
     }
   }
 }
+
+
+.pagination {
+  text-align: right;
+
+  li {
+    display: inline-block;
+    font-size: 1.2rem;
+    padding: 0 10px;
+    line-height: 30px;
+    border-radius: 2px;
+    text-align: center;
+  }
+
+  a {
+    display: inline-block;
+    text-decoration: none;
+    width: 20px;
+    color: #333;
+    text-align: center;
+  }
+
+  li.active a{
+    background: rgb(229,57,53);
+    color: white;
+  }
+}
+
 
 
 // Hover effect
@@ -210,3 +245,5 @@ $table-border-color:            #e0e0e0;
     }
   }
 }
+
+
