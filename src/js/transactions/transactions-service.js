@@ -6,15 +6,14 @@ angular.module('mani').service('transactionsService', function TransactionsServi
 		$http.get('http://localhost:8080/transactions')
 				.then(function(res){
 
-				var transactions = res.data.map(function(t) {
-					t.date = new Date(t.dateAuthorization[0], t.dateAuthorization[1] - 1, t.dateAuthorization[2], 0, 0, 0, 0);
-					if (t.category) {
-						t.category = [t.category];
-					}
-					return t;
-				});
-
-				callback(transactions);
+					res.data.map(function(t) {
+						if (t.category) {
+							t.category = [t.category];
+						}
+						t.note = '';
+						return t;
+					});
+				callback(res.data);
 		});
 	};
 

@@ -7,9 +7,9 @@ body[ng-cloak] {
 
 
 // LAYOUT
-  body {
-    color: $text-color;
-  }
+body {
+  color: $text-color;
+}
 
 .toolbar-button {
   min-width: 20px;
@@ -31,6 +31,10 @@ body[ng-cloak] {
 
 
 
+#main-sidenav {
+  min-width: 130px;
+ max-width: 220px;
+}
 // COMPONENTS
 .messages {
   position: relative;
@@ -147,5 +151,5 @@ md-backdrop.md-sidenav-backdrop {
 
 
 @import "table.scss";
-@import "tags.scss";
+@import "accounts.scss";
 @import "transactions.scss";

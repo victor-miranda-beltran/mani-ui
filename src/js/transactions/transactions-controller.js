@@ -1,14 +1,17 @@
 'use strict';
 
-angular.module('mani').controller('TransactionsController', function TransactionsController($scope, transactionsService, categoriesService){
+angular.module('mani').controller('TransactionsController', function TransactionsController($scope, transactionsService, datesService, categoriesService){
 
 
 	$scope.selectedAccounts = [];
 	$scope.filteredItems = [];
 	$scope.categoriesFiltered = [];
+	$scope.totalExpenditure = 0;
+	$scope.totalIncome = 0;
 
 	$scope.filter = {
 		description: '',
+		period: 'all',
 		amountMin: undefined,
 		amountMax: undefined,
 		categories: [],
@@ -50,6 +53,10 @@ angular.module('mani').controller('TransactionsController', function Transaction
 		transactionsService.deleteCategory(transaction);
 	};
 
+	$scope.updateTransactionNote = function(t) {
+		console.log(t);
+	};
+
 	$scope.showOptions = false;
 
 	$scope.updateFilter = function(){
@@ -68,6 +75,27 @@ angular.module('mani').controller('TransactionsController', function Transaction
 					function(t) {
 						return shownAccounts.filter(function(a){ return a == t.account.id}).length == 1;
 					})
+				//period filter
+				.filter(
+						function(t) {
+							if ($scope.filter.period == 'thisMonth') {
+								return new Date(t.dateAuthorization) >= datesService.startOfThisMonth();
+							}
+
+							if ($scope.filter.period == 'thisYear') {
+								return new Date(t.dateAuthorization) >= datesService.startOfThisYear();
+							}
+
+							if ($scope.filter.period == 'pastMonth') {
+								return new Date(t.dateAuthorization) > datesService.startOfPreviousMonth() &&  new Date(t.dateAuthorization) <= datesService.endOfPreviousMonth();
+							}
+
+							if ($scope.filter.period == 'pastYear') {
+								return new Date(t.dateAuthorization) > datesService.startOfPreviousYear() &&  new Date(t.dateAuthorization) <= datesService.endOfPreviousYear();
+							}
+
+							return true;
+						})
 				//category filter
 				.filter(
 						function(t) {
@@ -96,6 +124,16 @@ angular.module('mani').controller('TransactionsController', function Transaction
 		console.log(highest);
 
 		$scope.filter.slider.options.ceil = 5000;
+
+		$scope.totalExpenditure = $scope.filteredItems
+				.filter(function(t) { return t.flow === 'OUT'})
+				.map(function(o){ return o.amount; })
+				.reduce(function(a, b) {return a + b;});
+
+		$scope.totalIncome = $scope.filteredItems
+				.filter(function(t) { return t.flow === 'IN'})
+				.map(function(o){ return o.amount; })
+				.reduce(function(a, b) {return a + b;});
 
 	};
 

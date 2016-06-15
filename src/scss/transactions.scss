@@ -25,6 +25,28 @@
     margin-top: 60px;
   }
 
+
+  .totalamount {
+    font-size:  0.8em;
+  }
+  .totalincome,.totalexpenditure {
+    display: inline-block;
+    width: 130px;
+    padding-left:10px;
+    font-size: 0.8em;
+  }
+
+  .totalincome {
+    color: forestgreen;
+  }
+
+  .totalexpenditure {
+      color: orangered;
+    }
+
+
+
+
 }
 
 

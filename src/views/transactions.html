@@ -4,8 +4,10 @@
 
         <md-toolbar md-theme="custom" class="md-theme-light">
             <div class="md-toolbar-tools">
-                <h1 class="md-toolbar-tools">Transactions</h1>
-                <span  flex="" class="flex"></span>
+                <h1 class="md-toolbar-tools">Transactions </h1>
+                <span flex></span>
+                <span class="totalincome">Income: </span> <span class="totalamount">{{totalIncome |number : 2}}</span>
+                <span class="totalexpenditure"> Expenditure: </span><span class="totalamount">{{totalExpenditure |number : 2}}</span>
                 <button class="md-icon-button md-button md-custom-theme md-ink-ripple" type="button"
                         ng-show="true" ng-click="showOptions = !showOptions" aria-label="Show options"
                         aria-hidden="false"><i class="material-icons ng-scope">more_vert</i>
@@ -22,6 +24,7 @@
                         <th class="date ">Date</th>
                         <th class="account  " >Account</th>
                         <th class="description "  >Description</th>
+                        <th class="note "  >Note</th>
                         <th class="amount  text-right " >Amount</th>
                         <th class="category text-center"  >Category</th>
                     </tr>
@@ -29,9 +32,12 @@
 
                 <tbody >
                     <tr class="transaction" data-account-id="{{t.accountId}}" dir-paginate="t in filteredItems | itemsPerPage: 10" pagination-id="transpag">
-                        <td class="date " >{{t.date | date : 'dd/MM/yy'}}</td>
+                        <td class="date " >{{t.dateAuthorization | date : 'dd/MM/yy'}}</td>
                         <td class="account "  >{{t.account.alias}}</td>
                         <td class="description " >{{t.descriptionProcessed}}</td>
+                        <td class="note " >
+                            <a href="#" editable-text="t.note" onaftersave="updateTransactionNote(t)">{{ t.note|| 'empty' }}</a>
+                        </td>
                         <td class="amount  text-right" >
                             {{t.amount}}
                         </td>
@@ -77,7 +83,7 @@
                 <tfoot>
                     <tr>
                         <th colspan="5">
-                            <dir-pagination-controls pagination-id="transpag" boundary-links="true" template-url="views/pagination.tpl.html">
+                            <dir-pagination-controls pagination-id="transpag" max-size="5" boundary-links="true" template-url="views/pagination.tpl.html">
                             </dir-pagination-controls>
                         </th>
                     </tr>
@@ -97,6 +103,18 @@
         <md-content layout="column" >
 
             <form layout="column" layout-padding>
+
+                <md-input-container style="margin-right: 10px;" md-no-float="true">
+                    <label>Period</label>
+                    <md-select ng-model="filter.period" ng-change="updateFilter()">
+                        <md-option  value="all">All</md-option>
+                        <md-option  value="thisMonth">This month</md-option>
+                        <md-option  value="thisYear">This year</md-option>
+                        <md-option  value="pastMonth">Previous month</md-option>
+                        <md-option  value="pastYear">Previous year</md-option>
+                    </md-select>
+                </md-input-container>
+
                 <md-input-container md-no-float="true">
                     <label for="filterdesc">Description</label>
                     <input type="text" id="filterdesc" ng-keyup="updateFilter()" placeholder="Description"
