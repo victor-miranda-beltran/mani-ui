@@ -6,6 +6,7 @@ var rename = require('gulp-rename');
 var ngHtml2Js = require("gulp-ng-html2js");
 var serve = require('gulp-serve');
 var del = require('del');
+var inject = require('gulp-inject');
 
 var print = require('gulp-print');
 
@@ -64,13 +65,24 @@ gulp.task('watch', function() {
 
 gulp.task('bower', function() {
 	return gulp.src(mainBowerFiles(/* options */), { base: 'bower_components' })
-		.pipe(gulp.dest(dist.js));
+		.pipe(gulp.dest('dist/scripts'));
 });
 
 gulp.task('index', function () {
-	return gulp.src('src/index.html')
-		.pipe(print())
-		.pipe(gulp.dest('dist'));
+	return  gulp.src('src/index.html')
+
+			.pipe(inject(
+					gulp.src(
+							[
+								'./dist/scripts/**/*.js',
+								'./dist/scripts/**/*.css',
+								'./src/js/**/*.js'
+								,'./dist/css/**/*.css'
+								,'./dist/views/*.js'
+							],
+							{read: false}), {relative: true,ignorePath: '../dist'}))
+				.pipe(gulp.dest('dist'))
+
 });
 
 gulp.task('clean', function () {
