@@ -38,7 +38,7 @@
                         <td class="note " >
                             <a href="#" editable-text="t.note" onaftersave="updateTransactionNote(t)">{{ t.note|| 'empty' }}</a>
                         </td>
-                        <td class="amount  text-right" >
+                        <td class="amount  text-right">
                             {{t.amount}}
                         </td>
                         <td class="category">
@@ -104,6 +104,12 @@
 
             <form layout="column" layout-padding>
 
+                <md-input-container md-no-float="true">
+                    <label for="filterdesc">Description</label>
+                    <input type="text" id="filterdesc" ng-keyup="updateFilter()" placeholder="Description"
+                           ng-model="filter.description" md-autofocus>
+                </md-input-container>
+
                 <md-input-container style="margin-right: 10px;" md-no-float="true">
                     <label>Period</label>
                     <md-select ng-model="filter.period" ng-change="updateFilter()">
@@ -115,11 +121,7 @@
                     </md-select>
                 </md-input-container>
 
-                <md-input-container md-no-float="true">
-                    <label for="filterdesc">Description</label>
-                    <input type="text" id="filterdesc" ng-keyup="updateFilter()" placeholder="Description"
-                           ng-model="filter.description" md-autofocus>
-                </md-input-container>
+
 
                 <md-input-container md-no-float="true" layout-padding >
                     <label for="testInput">Accounts</label>

@@ -10,7 +10,7 @@ angular.module('mani').service('transactionsService', function TransactionsServi
 						if (t.category) {
 							t.category = [t.category];
 						}
-						t.note = '';
+						t.note = t.note || '';
 						return t;
 					});
 				callback(res.data);
@@ -26,6 +26,10 @@ angular.module('mani').service('transactionsService', function TransactionsServi
 
 	this.deleteCategory = function(transaction, callback) {
 		$http.delete('http://localhost:8080/transactions/'+transaction.id+'/category');
+	};
+
+	this.updateNote = function(transaction, callback) {
+		$http.put('http://localhost:8080/transactions/'+transaction.id+'/note',transaction.note);
 	};
 
 });

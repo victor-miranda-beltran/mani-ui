@@ -55,6 +55,7 @@ angular.module('mani').controller('TransactionsController', function Transaction
 
 	$scope.updateTransactionNote = function(t) {
 		console.log(t);
+		transactionsService.updateNote(t);
 	};
 
 	$scope.showOptions = false;
@@ -121,7 +122,6 @@ angular.module('mani').controller('TransactionsController', function Transaction
 			;
 
 		var highest = Math.max.apply(this,$scope.transactions.map( function(o){ return o.amount; }));
-		console.log(highest);
 
 		$scope.filter.slider.options.ceil = 5000;
 
