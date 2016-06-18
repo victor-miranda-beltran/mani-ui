@@ -3,7 +3,7 @@
 angular.module('mani').service('accountsService', function AccountsService($http){
 
     this.getAccounts = function(callback, errorFn) {
-        $http.get('http://localhost:8080/accounts')
+        $http.get(API_URL + 'accounts')
             .then(function(res){
 
                 var accounts = res.data;

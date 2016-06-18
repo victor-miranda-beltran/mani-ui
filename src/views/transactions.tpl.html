@@ -121,6 +121,14 @@
                     </md-select>
                 </md-input-container>
 
+                <md-input-container style="margin-right: 10px;" md-no-float="true">
+                    <label>Flow</label>
+                    <md-select ng-model="filter.flow" ng-change="updateFilter()">
+                        <md-option  value="all">All</md-option>
+                        <md-option  value="in">Income</md-option>
+                        <md-option  value="out">Expense</md-option>
+                    </md-select>
+                </md-input-container>
 
 
                 <md-input-container md-no-float="true" layout-padding >

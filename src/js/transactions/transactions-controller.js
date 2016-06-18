@@ -12,6 +12,7 @@ angular.module('mani').controller('TransactionsController', function Transaction
 	$scope.filter = {
 		description: '',
 		period: 'all',
+		flow: 'all',
 		amountMin: undefined,
 		amountMax: undefined,
 		categories: [],
@@ -76,6 +77,17 @@ angular.module('mani').controller('TransactionsController', function Transaction
 					function(t) {
 						return shownAccounts.filter(function(a){ return a == t.account.id}).length == 1;
 					})
+				//flow filter
+				.filter(
+						function(t) {
+							console.log($scope.filter.flow);
+							if ($scope.filter.flow == 'in') {
+								return t.flow == 'IN' || t.flow == 'INNER_IN';
+							} else if ($scope.filter.flow == 'out') {
+								return t.flow == 'OUT' || t.flow == 'INNER_OUT';
+							}
+							return true;
+						})
 				//period filter
 				.filter(
 						function(t) {
@@ -128,12 +140,12 @@ angular.module('mani').controller('TransactionsController', function Transaction
 		$scope.totalExpenditure = $scope.filteredItems
 				.filter(function(t) { return t.flow === 'OUT'})
 				.map(function(o){ return o.amount; })
-				.reduce(function(a, b) {return a + b;});
+				.reduce(function(a, b) {return a + b;}, 0);
 
 		$scope.totalIncome = $scope.filteredItems
 				.filter(function(t) { return t.flow === 'IN'})
 				.map(function(o){ return o.amount; })
-				.reduce(function(a, b) {return a + b;});
+				.reduce(function(a, b) {return a + b;}, 0);
 
 	};
 

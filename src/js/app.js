@@ -19,7 +19,7 @@ angular
 	.config(function ($routeProvider, $httpProvider, $mdThemingProvider) {
 		$routeProvider
 			.when('/transactions', {
-				templateUrl: 'views/transactions.html',
+				templateUrl: 'views/transactions.tpl.html',
 				controller: 'TransactionsController'
 			})
 			.when('/dashboard', {
