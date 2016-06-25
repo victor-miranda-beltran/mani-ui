@@ -21,10 +21,23 @@
     padding:0;
   }
 
+  td.date {
+    border-left: 4px solid red;
+    margin-bottom: 1px !important;
+  }
+
   rzslider {
     margin-top: 60px;
   }
 
+  .amount {
+    text-align: right;
+  }
+
+  .note {
+    width: 120px;
+    max-width: 120px;
+  }
 
   .totalamount {
     font-size:  0.8em;
@@ -44,6 +57,14 @@
       color: orangered;
     }
 
+
+    .possitive {
+      color:green;
+    }
+
+    .negative {
+      color: darkred;
+    }
 
 
 

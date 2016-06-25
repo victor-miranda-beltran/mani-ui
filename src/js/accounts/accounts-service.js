@@ -7,8 +7,6 @@ angular.module('mani').service('accountsService', function AccountsService($http
             .then(function(res){
 
                 var accounts = res.data;
-
-                accounts.map(function(a) {a.lastSynced =  new Date(a.lastSynced[0], a.lastSynced[1] - 1, a.lastSynced[2], 0, 0, 0, 0);return a;})
                 callback(res.data);
             });
     };
@@ -30,5 +28,9 @@ angular.module('mani').service('accountsService', function AccountsService($http
                 });
                 callback(balances)
             });
-    }
+    };
+
+    this.updateAccountAlias =  function(account) {
+        $http.put(API_URL + 'accounts/'+account.id+'/alias',account.alias);
+    };
 });

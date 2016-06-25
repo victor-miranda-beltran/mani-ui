@@ -31,7 +31,10 @@
                 <tbody >
                 <tr class="transaction" data-account-id="{{t.accountId}}" dir-paginate="a in accounts | itemsPerPage: 10" pagination-id="transpag">
                     <td class="description " >{{a.name}}</td>
-                    <td class="account "  >{{a.alias}}</td>
+                    <td class="account " >
+                        <a href="#" editable-text="a.alias" onaftersave="updateAccountAlias(a)">{{ a.alias|| 'set alias' }}</a>
+
+                    </td>
                     <td class="amount  text-right" >
                         {{a.currentBalance}}
                     </td>

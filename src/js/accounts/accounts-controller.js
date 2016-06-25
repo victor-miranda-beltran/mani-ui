@@ -7,6 +7,10 @@ angular.module('mani').controller('AccountsController', function AccountsControl
 
     accountsService.getAccounts(function(res) {
         $scope.accounts = res;
-    })
+    });
+
+    $scope.updateAccountAlias = function(account) {
+        accountsService.updateAccountAlias(account);
+    };
 
 });

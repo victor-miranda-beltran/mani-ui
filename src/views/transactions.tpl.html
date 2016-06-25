@@ -24,8 +24,8 @@
                         <th class="date ">Date</th>
                         <th class="account  " >Account</th>
                         <th class="description "  >Description</th>
-                        <th class="note "  >Note</th>
-                        <th class="amount  text-right " >Amount</th>
+                        <th class="note">Note</th>
+                        <th class="amount text-right" >Amount</th>
                         <th class="category text-center"  >Category</th>
                     </tr>
                 </thead>
@@ -34,12 +34,16 @@
                     <tr class="transaction" data-account-id="{{t.accountId}}" dir-paginate="t in filteredItems | itemsPerPage: 10" pagination-id="transpag">
                         <td class="date " >{{t.dateAuthorization | date : 'dd/MM/yy'}}</td>
                         <td class="account "  >{{t.account.alias}}</td>
-                        <td class="description " >{{t.descriptionProcessed}}</td>
+                        <td class="description " >
+                            <md-tooltip >
+                                {{t.description}}
+                            </md-tooltip>
+                            {{t.descriptionProcessed}}</td>
                         <td class="note " >
                             <a href="#" editable-text="t.note" onaftersave="updateTransactionNote(t)">{{ t.note|| 'empty' }}</a>
                         </td>
-                        <td class="amount  text-right">
-                            {{t.amount}}
+                        <td class="amount  text-right" ng-class="{ 'possitive': t.flow == 'IN' , 'negative': t.flow =='OUT' }">
+                            <span ng-show="t.flow =='OUT' && t.amount > 0">-</span> {{t.amount}} &euro;
                         </td>
                         <td class="category">
                             <md-chips ng-model="t.category"
@@ -82,7 +86,7 @@
 
                 <tfoot>
                     <tr>
-                        <th colspan="5">
+                        <th colspan="6">
                             <dir-pagination-controls pagination-id="transpag" max-size="5" boundary-links="true" template-url="views/pagination.tpl.html">
                             </dir-pagination-controls>
                         </th>

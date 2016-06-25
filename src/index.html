@@ -28,9 +28,13 @@
             </md-button>
         </md-toolbar>
 
-        <md-button ng-repeat-start="item in menuItems" layout="column" layout-align="center center"
-                   flex class="capitalize"
-                   ui-sref-active="md-warn" ng-href="#/{{item.href}}">
+        <md-button ng-repeat-start="item in menuItems"
+                   layout="column"
+                   layout-align="center center"
+                   flex
+                   ng-class="item.href == activePath ? 'section-selected' : ''"
+                   class="capitalize"
+                    ng-href="#/{{item.href}}">
             <div hide-sm hide-md class="md-tile-content">
                 <i class="material-icons md-36">{{item.icon}}</i>
             </div>

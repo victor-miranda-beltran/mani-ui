@@ -34,6 +34,11 @@ body {
 #main-sidenav {
   min-width: 130px;
  max-width: 220px;
+  a {
+    margin: 0;
+    padding: 3px;
+    border-radius: 0;
+  }
 }
 // COMPONENTS
 .messages {
@@ -78,6 +83,25 @@ body {
 
 .options.ng-hide {
   opacity:0;
+}
+
+.editable-controls button {
+  display: none;
+}
+
+.editable-controls input {
+  padding: 0;
+  margin: 0;
+}
+
+.section-selected {
+  color: white;
+  background-color: #2480c4;
+}
+
+.editable-wrap {
+  height: 20px;
+  margin-top: -5px;
 }
 
 .fixed-height-widget {
